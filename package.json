@@ -2,6 +2,9 @@
   "name": "jsonsem",
   "version": "0.0.0",
   "description": "Extendable validator for sematicaly structured JSON. When schema is not enought",
+  "scripts": {
+    "test": "./node_modules/.bin/mocha --recursive ./test/"
+  },
   "repository": {
     "type": "git",
     "url": "git://github.com/meredian/jsonsem.git"
@@ -12,6 +15,10 @@
     "semantic",
     "validation"
   ],
+  "devDependencies": {
+    "mocha": "*",
+    "chai": "*"
+  },
   "author": "Anton Sidelnikov",
   "license": "MIT",
   "bugs": {
