@@ -15,6 +15,9 @@
     "semantic",
     "validation"
   ],
+  "dependencies": {
+    "lodash": "*"
+  },
   "devDependencies": {
     "mocha": "*",
     "chai": "*"
