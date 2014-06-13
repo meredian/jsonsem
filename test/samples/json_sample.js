@@ -4,7 +4,7 @@ var DSL = require('./../../lib/dsl');
 describe('JSON schema', function() {
     var schema = function() {
         this.key('name', {type: 'string'});
-        this.key('level', {type: 'int'});
+        this.key('level', {type: 'number'});
 
         this.key('resources', {type: 'object'}, function() {
             this.each_key(this.any(), {type: 'object'}, function() {
