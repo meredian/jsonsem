@@ -1,0 +1,21 @@
+{
+  "name": "jsonsem",
+  "version": "0.0.0",
+  "description": "Extendable validator for sematicaly structured JSON. When schema is not enought",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/meredian/jsonsem.git"
+  },
+  "keywords": [
+    "json",
+    "schema",
+    "semantic",
+    "validation"
+  ],
+  "author": "Anton Sidelnikov",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/meredian/jsonsem/issues"
+  },
+  "homepage": "https://github.com/meredian/jsonsem"
+}
