@@ -1,4 +1,4 @@
-require('./../helper.js');
+var helper = require('./../helper.js');
 var DSL = require('./../../lib/dsl');
 
 describe('JSON schema', function() {

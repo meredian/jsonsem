@@ -20,7 +20,9 @@
   },
   "devDependencies": {
     "mocha": "*",
-    "chai": "*"
+    "chai": "*",
+    "sinon":        "*",
+    "sinon-chai":   "*"
   },
   "author": "Anton Sidelnikov",
   "license": "MIT",
