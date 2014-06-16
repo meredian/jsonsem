@@ -1,13 +1,13 @@
 var chai = require('chai');
 chai.should();
 chai.use(require('sinon-chai'));
-var sinon = require('sinon');
-var sandbox = exports.sinon = null;
+var sinon = exports.sinon = require('sinon');
+var sandbox = exports.sandbox = null;
 
 beforeEach(function() {
-    exports.sinon = sinon.sandbox.create();
+    exports.sandbox = sinon.sandbox.create();
 });
 
 afterEach(function() {
-    exports.sinon.restore();
+    exports.sandbox.restore();
 });

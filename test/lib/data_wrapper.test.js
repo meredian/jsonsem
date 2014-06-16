@@ -41,7 +41,7 @@ describe('DataWrapper', function() {
             this.data_wrapper.get_keys('a').should.deep.equal(['b', 'bb']);
         });
         it('caches keys', function() {
-            helper.sinon.spy(this.data_wrapper, "get");
+            helper.sandbox.spy(this.data_wrapper, "get");
             this.data_wrapper.get_keys('arr');
             this.data_wrapper.get_keys('arr');
             this.data_wrapper.get.should.be.calledOnce;
