@@ -29,7 +29,7 @@ describe('ObjectValidator', function() {
 
         dsl.validate({name: "John"}).should.be.true;
         dsl.validate({data: "Data"}).should.be.true;
-        dsl.validate({name: {}}).should.be.false; 
+        dsl.validate({name: {}}).should.be.false;
     });
 
     it('validates all properties if each_key validator set up', function() {

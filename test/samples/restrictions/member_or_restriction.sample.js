@@ -5,7 +5,7 @@ describe('MemberOfRestriction', function() {
     it('validates property names are properties of referenced object', function() {
         var dsl = new DSL(function() {
             this.key('cost', {type: 'object'}, function() {
-                 this.each_key(this.member_of('data.resources'), {type: 'number'});
+                this.each_key(this.member_of('data.resources'), {type: 'number'});
             });
 
             this.key('data', {type: 'object'}, function() {
@@ -13,7 +13,6 @@ describe('MemberOfRestriction', function() {
                     this.each_key(this.any(), {type: 'string'});
                 });
             });
-            
         });
 
         dsl.validate({
