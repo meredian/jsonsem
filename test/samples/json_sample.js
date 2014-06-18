@@ -26,6 +26,14 @@ describe('JSON schema', function() {
                 this.other_keys_restricted();
             })
         });
+
+        this.key('levels', {type: 'array'}, function() {
+            this.each_index({type: 'array'}, function() {
+                this.index(0, {type: 'number'});
+                this.optional_index(1, {type: 'string'});
+                this.other_indexes_restricted();
+            });
+        });
     };
 
     var json = {
@@ -52,7 +60,12 @@ describe('JSON schema', function() {
                 cost: {gold: 500, wood: 200},
                 resource_production: {gold: 1000}
             }
-        }
+        },
+
+        levels: [
+            [20, 'First one'],
+            [50]
+        ]
     };
 
     it('validates JSON with no errors', function() {
