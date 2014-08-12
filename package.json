@@ -24,7 +24,7 @@
     "sinon":        "*",
     "sinon-chai":   "*"
   },
-  "author": "Anton Sidelnikov",
+  "author": "Anton Sidelnikov <ndmeredian@gmail.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/meredian/jsonsem/issues"
