@@ -28,7 +28,7 @@ describe('DataWrapper', function() {
         });
 
         it('returns value by path', function() {
-            this.data_wrapper.get('a$b').should.equal(data.a.b)
+            this.data_wrapper.get('a$b').should.equal(data.a.b);
         });
 
         it('returns value by path with array index', function() {

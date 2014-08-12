@@ -14,14 +14,14 @@ var data = {
 describe('MemberOfRestriction', function() {
     beforeEach(function() {
         this.dsl = new DSL(function() {});
-        this.member_of_restriction = new MemberOfRestriction(this.dsl, 'ref')
+        this.member_of_restriction = new MemberOfRestriction(this.dsl, 'ref');
         this.data_wrapper = new DataWrapper(data);
     });
 
     describe('#check_key', function() {
         beforeEach(function() {
             helper.sandbox.stub(this.dsl, 'error');
-        })
+        });
 
         it('validates correct key', function() {
             this.member_of_restriction.check_key('some.path', 'key_1', this.data_wrapper);

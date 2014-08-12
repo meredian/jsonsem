@@ -24,7 +24,7 @@ describe('JSON schema', function() {
                 this.key('cost', {type: 'resources'});
                 this.optional_key('resource_production', {type: 'resources'});
                 this.other_keys_restricted();
-            })
+            });
         });
 
         this.key('levels', {type: 'array'}, function() {

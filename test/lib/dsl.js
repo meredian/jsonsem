@@ -11,7 +11,7 @@ describe('DSL', function() {
             var path = "some.path";
             var msg = "Error occured";
             this.dsl.error(path, msg);
-            this.dsl.errors.should.deep.equal([[path, msg]])
+            this.dsl.errors.should.deep.equal([[path, msg]]);
         });
     });
 });
