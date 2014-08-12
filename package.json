@@ -16,7 +16,7 @@
     "validation"
   ],
   "dependencies": {
-    "lodash": "*"
+    "lodash": "2.4.1"
   },
   "devDependencies": {
     "mocha": "*",
