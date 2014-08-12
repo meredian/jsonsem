@@ -1,10 +1,11 @@
 {
   "name": "jsonsem",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Extendable validator for sematicaly structured JSON. When schema is not enought",
   "scripts": {
     "test": "./node_modules/.bin/mocha --recursive ./test/"
   },
+  "main": "lib/dsl.js",
   "repository": {
     "type": "git",
     "url": "git://github.com/meredian/jsonsem.git"
@@ -16,7 +17,7 @@
     "validation"
   ],
   "dependencies": {
-    "lodash": "2.4.1"
+    "lodash": "2.4.x"
   },
   "devDependencies": {
     "mocha": "*",
