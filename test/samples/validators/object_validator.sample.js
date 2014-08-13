@@ -50,4 +50,15 @@ describe('ObjectValidator', function() {
         dsl.validate({name: "John"}).should.be.true;
         dsl.validate({name: "John", id: 123}).should.be.false;
     });
+
+    it('validates custom assertions', function() {
+        var dsl = new DSL(function() {
+            this.assert('is_mystical_enough', function(value) {
+                return value.name === "Assertion mystics";
+            });
+        });
+
+        dsl.validate({name: "John"}).should.be.false;
+        dsl.validate({name: "Assertion mystics"}).should.be.true;
+    });
 });
