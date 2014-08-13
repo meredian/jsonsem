@@ -61,4 +61,17 @@ describe('ObjectValidator', function() {
         dsl.validate({name: "John"}).should.be.false;
         dsl.validate({name: "Assertion mystics"}).should.be.true;
     });
+
+    it('validates custom assertions', function() {
+        var dsl = new DSL(function() {
+            var assert = function(value) {
+                return value.length > 10;
+            };
+            this.key('name', {type: 'string', assert: assert});
+        });
+
+        dsl.validate({name: "John"}).should.be.false;
+        dsl.validate({name: "John the first of his name"}).should.be.true;
+    });
+
 });
