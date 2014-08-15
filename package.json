@@ -1,6 +1,6 @@
 {
   "name": "jsonsem",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Extendable validator for sematicaly structured JSON. When schema is not enought",
   "scripts": {
     "test": "./node_modules/.bin/mocha --recursive ./test/"
