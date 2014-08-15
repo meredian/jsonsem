@@ -62,16 +62,32 @@ describe('ObjectValidator', function() {
         dsl.validate({name: "Assertion mystics"}).should.be.true;
     });
 
-    it('validates custom assertions', function() {
+    it('validates parameter-passed custom assertions', function() {
         var dsl = new DSL(function() {
-            var assert = function(value) {
+            var is_long_string = function(value) {
                 return value.length > 10;
             };
-            this.key('name', {type: 'string', assert: assert});
+            this.key('name', {type: 'string', assert: is_long_string});
         });
 
         dsl.validate({name: "John"}).should.be.false;
         dsl.validate({name: "John the first of his name"}).should.be.true;
     });
 
+    it('validates both parameter-passed and direct assertions', function() {
+        var dsl = new DSL(function() {
+            var has_some_keys = function(value) {
+                return Object.keys(value).length > 1;
+            };
+            this.key('obj', {type: 'object', assert: has_some_keys}, function() {
+                this.assert('has_not_too_many_keys', function(value) {
+                    return Object.keys(value).length < 3;
+                });
+            });
+        });
+
+        dsl.validate({obj: {a: 1, b: 2}}).should.be.true;
+        dsl.validate({obj: {a: 1}}).should.be.false;
+        dsl.validate({obj: {a: 1, b: 2, c: 3}}).should.be.false;
+    });
 });
