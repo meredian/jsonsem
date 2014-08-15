@@ -5,6 +5,7 @@ describe('JSON schema', function() {
     var schema = function() {
         this.key('name', {type: 'string'});
         this.key('level', {type: 'number'});
+        this.key('human', {type: 'boolean'});
 
         this.key('resources', {type: 'object'}, function() {
             this.each_key(this.any(), {type: 'object'}, function() {
@@ -39,6 +40,7 @@ describe('JSON schema', function() {
     var json = {
         name: "Mr Smith",
         level: 10,
+        human: true,
         resources: {
             gold: {
                 name: 'Gold',
