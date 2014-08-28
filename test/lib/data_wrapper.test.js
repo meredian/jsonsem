@@ -1,5 +1,5 @@
 var helper = require('./../helper.js');
-var DataWrapper = require('./../../lib/data_wrapper');
+var DataWrapper = helper.require('data_wrapper');
 
 var separator = '$';
 var data = {

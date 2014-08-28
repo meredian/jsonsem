@@ -1,7 +1,7 @@
 var helper = require('./../../helper.js');
-var MemberOfRestriction = require('./../../../lib/restrictions/member_of_restriction');
-var DataWrapper = require('./../../../lib/data_wrapper');
-var DSL = require('./../../../lib/dsl');
+var MemberOfRestriction = helper.require('restrictions/member_of_restriction');
+var DataWrapper = helper.require('data_wrapper');
+var DSL = helper.require('dsl');
 
 var data = {
     ref: {

@@ -1,5 +1,5 @@
 var helper = require('./../../helper.js');
-var DSL = require('./../../../lib/dsl');
+var DSL = helper.require('dsl');
 
 describe('MemberOfRestriction', function() {
     it('validates property names are properties of referenced object', function() {

@@ -1,7 +1,7 @@
 var helper = require('./../../helper.js');
-var ObjectValidator = require('./../../../lib/validators/object_validator');
-var DataWrapper = require('./../../../lib/data_wrapper');
-var DSL = require('./../../../lib/dsl');
+var ObjectValidator = helper.require('validators/object_validator');
+var DataWrapper = helper.require('data_wrapper');
+var DSL = helper.require('dsl');
 
 describe('ObjectValidator', function() {
     beforeEach(function() {

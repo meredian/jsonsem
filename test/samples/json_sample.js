@@ -1,5 +1,5 @@
 var helper = require('./../helper.js');
-var DSL = require('./../../lib/dsl');
+var DSL = helper.require('dsl');
 
 describe('JSON schema', function() {
     var schema = function() {
