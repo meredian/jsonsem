@@ -4,7 +4,7 @@ var DSL = helper.require('dsl');
 describe('JSON schema', function() {
     var schema = function() {
         this.key('name', {type: 'string'});
-        this.key('level', {type: 'number'});
+        this.key('level', {type: 'uint'});
         this.key('human', {type: 'boolean'});
 
         this.key('resources', {type: 'object'}, function() {
