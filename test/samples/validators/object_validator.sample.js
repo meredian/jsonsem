@@ -64,9 +64,9 @@ describe('ObjectValidator', function() {
 
     it('validates parameter-passed custom assertions', function() {
         var dsl = new DSL(function() {
-            var is_long_string = function(value) {
+            var is_long_string = this.assertion('is_long_enough',function(value) {
                 return value.length > 10;
-            };
+            });
             this.key('name', {type: 'string', assert: is_long_string});
         });
 
@@ -76,9 +76,9 @@ describe('ObjectValidator', function() {
 
     it('validates both parameter-passed and direct assertions', function() {
         var dsl = new DSL(function() {
-            var has_some_keys = function(value) {
+            var has_some_keys = this.assertion('has_some_keys', function(value) {
                 return Object.keys(value).length > 1;
-            };
+            });
             this.key('obj', {type: 'object', assert: has_some_keys}, function() {
                 this.assert('has_not_too_many_keys', function(value) {
                     return Object.keys(value).length < 3;
