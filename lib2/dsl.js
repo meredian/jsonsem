@@ -1,27 +1,55 @@
 var Scope = require('./scope');
-var BaseValidator = require('./baseValidator');
+var BaseValidator = require('./types/base');
 var DataWrapper = require('./dataWrapper');
 
-var DSL = module.exports = function(schema) {
+var DSL = module.exports = function() {
     this.rootScope = new Scope(this);
-    this.rootScope.addProp('type');
-    this.rootScope.addType('base', BaseValidator);
+    BaseValidator.define(this.rootScope);
 
-    new BaseValidator(this.rootScope, {})
+    this.rootValidator = this.rootScope.getValidator({type: 'base'})
     .include(require('./types/object'))
-    .include(require('./types/string'));
+    .include(require('./types/array'))
+    .include(require('./types/string'))
+    .include(require('./types/boolean'))
+    .include(require('./types/numbers'));
+};
 
-    var ObjectValidator = this.rootScope.getType('object');
-    this.rootValidator = new ObjectValidator(this.rootScope, {}, schema);
+DSL.prototype.schema = function(props, schema) {
+    if (schema === undefined) {
+        schema = props;
+        props = {type: 'object'};
+    }
+    this.schemaValidator = this.rootScope.getValidator(props, schema);
+    return this;
+};
+
+DSL.prototype.extend = function(schema) {
+    if (this.schemaValidator) {
+        throw new Error("Can't extend base validator, when schema is already defined");
+    }
+    this.rootValidator.include(schema);
+    return this;
 };
 
 DSL.prototype.validate = function(json) {
-    this.rootValidator.validate(json, null, new DataWrapper(json));
+    if (!this.schemaValidator) {
+        throw new Error("Define schema before validation");
+    }
+    this.schemaValidator.validate(json, null, new DataWrapper(json));
 };
 
-var dsl = new DSL(function() {
+var dsl = new DSL()
+.extend(function() {
+    this.extend('object', {}, function() {
+        this.method('hello', function(value) {
+            console.log(value);
+        });
+    });
+})
+.schema(function() {
     this.key('obj', {type: 'object'});
     this.key('name', {type: 'string', length: 4});
+
 });
 
 dsl.validate({

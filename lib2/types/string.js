@@ -8,11 +8,6 @@ module.exports = function() {
         this.property('length', function(length, value) {
             return value.length === length;
         });
-        this.onValidate(function() {
-            console.log("VALIDATING STRING :");
-            console.log(arguments);
-        });
-
     });
 };
 

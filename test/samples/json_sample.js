@@ -8,32 +8,30 @@ describe('JSON schema', function() {
         this.key('human', {type: 'boolean'});
 
         this.key('resources', {type: 'object'}, function() {
-            this.each_key(this.any(), {type: 'object'}, function() {
+            this.eachKey(this.any(), {type: 'object'}, function() {
                 this.key('name', {type: 'string'});
                 this.key('description', {type: 'string'});
-                this.other_keys_restricted();
             });
         });
 
         this.type('resources', {type: 'object'}, function() {
-            this.each_key(this.member_of('resources'), {type: 'number'});
+            this.eachKey(this.memberOf('resources'), {type: 'number'});
         });
 
         this.key('buildings', {type: 'object'}, function() {
-            this.each_key(this.any(), {type: 'object'}, function() {
+            this.eachKey(this.any(), {type: 'object'}, function() {
                 this.key('name', {type: 'string'});
                 this.key('cost', {type: 'resources'});
-                this.optional_key('resource_production', {type: 'resources'});
-                this.other_keys_restricted();
+                this.optionalKey('resource_production', {type: 'resources'});
             });
         });
 
         this.key('levels', {type: 'array'}, function() {
-            this.each_index({type: 'array'}, function() {
-                this.index(0, {type: 'number'});
-                this.optional_index(1, {type: 'string'});
-                this.other_indexes_restricted();
-            });
+            // this.each_index({type: 'array'}, function() {
+            //     this.index(0, {type: 'number'});
+            //     this.optional_index(1, {type: 'string'});
+            //     this.other_indexes_restricted();
+            // });
         });
     };
 
@@ -71,7 +69,7 @@ describe('JSON schema', function() {
     };
 
     it('validates JSON with no errors', function() {
-        var dsl = new DSL(schema);
+        var dsl = new DSL().schema(schema);
         dsl.validate(json).should.be.true;
     });
 });

@@ -6,7 +6,7 @@ var sinon = exports.sinon = require('sinon');
 var sandbox = exports.sandbox = null;
 
 exports.require = function(lib_path) {
-    return require(path.join(__dirname, '../lib', lib_path));
+    return require(path.join(__dirname, '../lib2', lib_path));
 };
 
 beforeEach(function() {

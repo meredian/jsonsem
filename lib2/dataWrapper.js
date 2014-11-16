@@ -26,7 +26,7 @@ DataWrapper.prototype.getKeys = function(path) {
     if (!this.cachedKeys[path]) {
         this.cachedKeys[path] = _.keys(this.get(path));
     }
-    return this.cached_keys[path];
+    return this.cachedKeys[path];
 };
 
 DataWrapper.prototype.concatPaths = function(path, subpath) {

@@ -33,6 +33,10 @@ Scope.prototype.addType = function(type, ctor) {
     }
 };
 
+Scope.prototype.rewriteType = function(type, ctor) {
+    this.types[type] = ctor;
+};
+
 Scope.prototype.hasProp = function(prop) {
     return (this.allowedProps.indexOf(prop) >= 0) || (this.parent && this.parent.hasProp(prop));
 };
@@ -45,21 +49,16 @@ Scope.prototype.addProp = function(prop) {
 };
 
 Scope.prototype.getValidator = function(props, schema) {
-    var self = this;
     if (!props.type) {
         throw new Error("Property type missing in Validator parameters");
     }
 
     var type = this.getType(props.type);
 
-    Object.keys(props).forEach(function(name) {
-        if (!self.hasProp(name) && !type.props.hasOwnProperty(name)) {
+    _.forOwn(props, function(value, name, obj) {
+        if (!this.hasProp(name) && !type.props.hasOwnProperty(name)) {
             throw new Error("Validator property " + name + " is unknown in current scope");
         }
-    });
-
-    _.each(props, function(value, name, obj) {
-        console.log(value, name, obj);
     }, this);
 
     return new type(this, props, schema);

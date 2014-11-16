@@ -17,13 +17,14 @@
     "validation"
   ],
   "dependencies": {
-    "lodash": "2.4.x"
+    "lodash": "2.4.x",
+    "node-v8-clone": "^0.6.2"
   },
   "devDependencies": {
     "mocha": "*",
     "chai": "*",
-    "sinon":        "*",
-    "sinon-chai":   "*"
+    "sinon": "*",
+    "sinon-chai": "*"
   },
   "author": "Anton Sidelnikov <ndmeredian@gmail.com>",
   "license": "MIT",
