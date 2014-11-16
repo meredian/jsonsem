@@ -13,21 +13,25 @@ module.exports = function() {
         this.onCreate(function() {
             this.keys = {};
             this.optionalKeys = {};
+            this.otherKeysRestricted = false;
         });
 
         this.onValidate(function(value, path, dataWrapper) {
-            console.log("KEYS: ");
-            _.each(this.keys, function(validator, name) {
-                validator.validate(value[name], dataWrapper.concatPaths(path, name), dataWrapper);
+            _.each(this.keys, function(validator, key) {
+                if (value.hasOwnProperty(key)) {
+                    validator.validate(value[key], dataWrapper.concatPaths(path, key), dataWrapper);
+                } else {
+                    this.scope.error("Key " + key + " is missing");
+                }
             }, this);
         });
 
-        this.method('key', function(name, props, schema) {
-            this.keys[name] = this.scope.getValidator(props, schema);
+        this.method('key', function(key, props, schema) {
+            this.keys[key] = this.scope.getValidator(props, schema);
         });
 
-        this.method('optionalKey', function(name, props, schema) {
-            this.optionalKeys[name] = this.scope.getValidator(props, schema);
+        this.method('optionalKey', function(key, props, schema) {
+            this.optionalKeys[key] = this.scope.getValidator(props, schema);
         });
     });
 };

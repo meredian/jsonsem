@@ -1,9 +1,9 @@
 var _ = require('lodash');
-var ValidatorBuilder = require('./ValidatorBuilder');
+var TypeBuilder = require('./typeBuilder');
 
-var BaseValidator = module.exports = function(scope, params, schema) {
+var BaseValidator = module.exports = function(scope, props, schema) {
     this.scope = scope;
-    this.params = params;
+    this.props = props;
     if (schema) {
         schema.call(this);
     }
@@ -16,8 +16,8 @@ BaseValidator.prototype.include = function(schema) {
     return this;
 };
 
-BaseValidator.prototype.type = function(name, params, schema) {
-    ValidatorBuilder.build(this.scope, name, params, schema);
+BaseValidator.prototype.type = function(name, props, schema) {
+    TypeBuilder.build(this.scope, name, props, schema);
 };
 
 BaseValidator.prototype.validate = function(value, path, dataWrapper) {};
