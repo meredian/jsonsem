@@ -15,22 +15,22 @@ MethodProxy.filterProxies = function(callstack, args) {
 };
 
 
-var TypeDsl = module.exports = function(scope, name, props) {
+var TypeBuilder = module.exports = function(scope, name, props) {
     var self = this;
     this.scope = scope;
     this.name = name;
     this.props = props;
 };
 
-TypeDsl.prototype.init = function() {
+TypeBuilder.prototype.init = function() {
     this.def = this.buildDef(this.scope, this.name, this.props);
     delete this.props.type;
 
-    this.interface = this.buildInterface(this.def);
+    this.typeDsl = this.buildTypeDsl(this.def);
     return this;
 };
 
-TypeDsl.prototype.buildDef = function(scope, name, props) {
+TypeBuilder.prototype.buildDef = function(scope, name, props) {
     return {
         scope: scope,
         typeName: name,
@@ -46,7 +46,7 @@ TypeDsl.prototype.buildDef = function(scope, name, props) {
     };
 };
 
-TypeDsl.prototype.buildInterface = function(def) {
+TypeBuilder.prototype.buildTypeDsl = function(def) {
     var methodCallWrapper = function(name) {
         return function() {
             var proxy = new MethodProxy(++def.methodCallCounter, name, arguments);
@@ -55,7 +55,7 @@ TypeDsl.prototype.buildInterface = function(def) {
         };
     };
 
-    var interface = {
+    var typeDsl = {
         typeAssertion: function(assertion) {
             def.typeAssertion = assertion;
         },
@@ -87,19 +87,19 @@ TypeDsl.prototype.buildInterface = function(def) {
 
     if (def.parentType) {
         _.each(def.parentType.methods, function(method) {
-            interface[method] = methodCallWrapper(method);
+            typeDsl[method] = methodCallWrapper(method);
         }, this);
     }
 
-    return interface;
+    return typeDsl;
 };
 
-TypeDsl.prototype.schema = function(schema) {
-    schema.call(this.interface);
+TypeBuilder.prototype.schema = function(schema) {
+    schema.call(this.typeDsl);
     return this;
 };
 
-TypeDsl.build = function(scope, name, props, schema, noParentType) {
+TypeBuilder.build = function(scope, name, props, schema, noParentType) {
     if (!noParentType && !props.type) {
         throw new Error("Property type missing in type parameters");
     }
@@ -107,16 +107,16 @@ TypeDsl.build = function(scope, name, props, schema, noParentType) {
     return new this(scope, name, props).init().schema(schema).build();
 };
 
-TypeDsl.extend = function(scope, name, props, schema) {
+TypeBuilder.extend = function(scope, name, props, schema) {
     var type = scope.getType(name);
     var builder = type.builder;
-    var extBuilder = new TypeDsl(scope, name, builder.props);
+    var extBuilder = new TypeBuilder(scope, name, builder.props);
     extBuilder.def = clone(builder.def, true);
-    extBuilder.interface = extBuilder.buildInterface(extBuilder.def);
+    extBuilder.typeDsl = extBuilder.buildTypeDsl(extBuilder.def);
     extBuilder.schema(schema).rebuild();
 };
 
-TypeDsl.prototype.buildTypeConstructor = function(def) {
+TypeBuilder.prototype.buildTypeConstructor = function(def) {
     return function(scope, props, schema) {
         if (def.parentType) {
             def.parentType.call(this, scope, props);
@@ -136,7 +136,7 @@ TypeDsl.prototype.buildTypeConstructor = function(def) {
     };
 };
 
-TypeDsl.prototype.buildTypeValidation = function(def) {
+TypeBuilder.prototype.buildTypeValidation = function(def) {
     return function(value, path, dataWrapper) {
         if (def.typeAssertion && !def.typeAssertion.call(this, value)) {
             this.scope.error("Type assertion failed for type " + def.typeName);
@@ -158,7 +158,7 @@ TypeDsl.prototype.buildTypeValidation = function(def) {
     };
 };
 
-TypeDsl.prototype.buildType = function() {
+TypeBuilder.prototype.buildType = function() {
     var def = this.def;
 
     var newType = this.buildTypeConstructor(def);
@@ -188,14 +188,14 @@ TypeDsl.prototype.buildType = function() {
     return newType;
 };
 
-TypeDsl.prototype.build = function() {
+TypeBuilder.prototype.build = function() {
     var newType = this.buildType();
     this.scope.addType(this.name, newType);
 
     return this;
 };
 
-TypeDsl.prototype.rebuild = function() {
+TypeBuilder.prototype.rebuild = function() {
     var newType = this.buildType();
     this.scope.rewriteType(this.name, newType);
     return this;
