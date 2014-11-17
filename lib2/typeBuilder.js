@@ -8,12 +8,11 @@ var MethodProxy = function(id, name, args) {
     this.args = args;
 };
 
-MethodProxy.filterProxies = function(callstack, args) {
-    return _.map(args, function(arg) {
+MethodProxy.prototype.filteredArgs = function(callstack) {
+    return _.map(this.args, function(arg) {
         return (arg instanceof MethodProxy) ? callstack[arg.id] : arg;
     });
 };
-
 
 var TypeBuilder = module.exports = function(scope, name, props) {
     var self = this;
@@ -127,7 +126,7 @@ TypeBuilder.prototype.buildTypeConstructor = function(def) {
         if (def.methodCalls.length) {
             var callstack = {};
             _.each(def.methodCalls, function(proxy) {
-                callstack[proxy.id] = this[proxy.name].apply(this, MethodProxy.filterProxies(callstack, proxy.args));
+                callstack[proxy.id] = this[proxy.name].apply(this, proxy.filteredArgs(callstack));
             }, this);
         }
         if (schema) {
