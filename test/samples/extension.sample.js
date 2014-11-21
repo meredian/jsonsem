@@ -17,14 +17,17 @@ describe('Type inheritance and overriding', function() {
         });
 
         this.key('type_2', {type: 'type_3'}, function() {
-            this.extend('base', {}, function() {
-                this.property('name', function(value) {
-                    return true;
+            this.extend('number', {}, function() {
+                this.property('min', function(min, value) {
+                    return min <= value;
+                });
+                this.property('max', function(max, value) {
+                    return max >= value;
                 });
                 this.method('hohoho', function(txt) { console.log(txt); });
             });
             this.ololo("OVERRIDED");
-            this.key('int', {type: 'int', name: "aaa"}, function() {
+            this.key('int', {type: 'int', min: 2, max: 12}, function() {
                 this.hohoho("EXTENDED BASE CLASS!");
             });
         });
