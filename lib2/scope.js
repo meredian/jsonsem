@@ -3,21 +3,34 @@ var _ = require('lodash');
 var Scope = module.exports = function(dsl, parent) {
     this.dsl = dsl;
     this.parent = parent;
+    if (this.parent) {
+        this.parent.children.push(this);
+    }
     this.types = {};
     this.allowedProps = [];
+    this.children = [];
 };
 
-Scope.prototype.error = function(msg) {
-    console.log(msg);
+Scope.prototype.error = function(path, msg) {
+    this.dsl.error(path, msg);
+    console.log("Path: %s; Error: %s", path, msg);
 };
 
 Scope.prototype.getType = function(type) {
+    var typeObject = this.getTypeOrNull(type);
+    if (!typeObject) {
+        throw new Error("Validator type " + type + " not found");
+    }
+    return typeObject;
+};
+
+Scope.prototype.getTypeOrNull = function(type) {
     if (this.types[type]) {
         return this.types[type];
     } else if (this.parent) {
-        return this.parent.getType(type);
+        return this.parent.getTypeOrNull(type);
     } else {
-        throw new Error("Validator type " + type + " not found");
+        return null;
     }
 };
 

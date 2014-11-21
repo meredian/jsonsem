@@ -15,8 +15,16 @@ describe('JSON schema', function() {
         });
 
         this.type('resources', {type: 'object'}, function() {
+            this.method("ololo", function() {});
+            this.property("prop_2", function() {});
             this.eachKey(this.memberOf('resources'), {type: 'number'});
         });
+
+        this.extend('object', {}, function() {
+            // this.method("ololo", function() {});
+            this.property("prop_3", function() {});
+        });
+
 
         this.key('buildings', {type: 'object'}, function() {
             this.eachKey(this.any(), {type: 'object'}, function() {
@@ -33,6 +41,7 @@ describe('JSON schema', function() {
             //     this.other_indexes_restricted();
             // });
         });
+
     };
 
     var json = {

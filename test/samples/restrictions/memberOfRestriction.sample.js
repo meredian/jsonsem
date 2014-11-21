@@ -3,14 +3,14 @@ var DSL = helper.require('dsl');
 
 describe('MemberOfRestriction', function() {
     it('validates property names are properties of referenced object', function() {
-        var dsl = new DSL(function() {
+        var dsl = new DSL().schema(function() {
             this.key('cost', {type: 'object'}, function() {
-                this.each_key(this.member_of('data.resources'), {type: 'number'});
+                this.eachKey(this.memberOf('data.resources'), {type: 'number'});
             });
 
             this.key('data', {type: 'object'}, function() {
                 this.key('resources', {type: 'object'}, function() {
-                    this.each_key(this.any(), {type: 'string'});
+                    this.eachKey(this.any(), {type: 'string'});
                 });
             });
         });

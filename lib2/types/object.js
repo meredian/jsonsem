@@ -1,5 +1,5 @@
 var _ = require('lodash');
-var scope = require('../scope');
+var Scope = require('../scope');
 
 module.exports = function() {
     this.type('object', {type: 'base'}, function() {
@@ -8,9 +8,10 @@ module.exports = function() {
         });
 
         this.onCreate(function() {
+            this.scope = new Scope(this.scope.dsl, this.scope);
             this.keys = {};
             this.optionals = {};
-            this.allowExtraKeys = false;
+            this.extraKeysAllowed = false;
         });
 
         this.onValidate(function(value, path, dataWrapper) {
@@ -19,7 +20,7 @@ module.exports = function() {
                     validator.validate(value[key], dataWrapper.concatPaths(path, key), dataWrapper);
                 } else {
                     if (!this.optionals[key]) {
-                        this.scope.error("Key " + key + " is missing");
+                        this.scope.error(path, "Key " + key + " is missing");
                     }
                 }
             }, this);
@@ -32,8 +33,8 @@ module.exports = function() {
                         this.eachKeyScope.validator.validate(value[key], subpath, dataWrapper);
                     }, this);
                 } else {
-                    if (!this.allowExtraKeys) {
-                        this.scope.error("Unexpected keys: " + leftKeys.join(", "));
+                    if (!this.extraKeysAllowed) {
+                        this.scope.error(path, "Unexpected keys: " + leftKeys.join(", "));
                     }
                 }
             }
@@ -49,7 +50,7 @@ module.exports = function() {
         });
 
         this.method('allowExtraKeys', function() {
-            this.allowExtraKeys = true;
+            this.extraKeysAllowed = true;
         });
 
         this.method('eachKey', function(restriction, props, schema) {
@@ -64,7 +65,7 @@ module.exports = function() {
             var scope = this.scope;
             return function(path, key, dataWrapper) {
                 if (dataWrapper.getKeys(sourcePath).indexOf(key) < 0) {
-                    scope.error("Reference to unexisting key " + key + " at path " + path);
+                    scope.error(path, "Reference to unexisting key " + key + " at path " + path);
                 }
             };
         });

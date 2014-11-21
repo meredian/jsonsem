@@ -1,5 +1,5 @@
 var helper = require('./../helper.js');
-var DataWrapper = helper.require('data_wrapper');
+var DataWrapper = helper.require('dataWrapper');
 
 var separator = '$';
 var data = {
@@ -17,46 +17,46 @@ var data = {
 
 describe('DataWrapper', function() {
     beforeEach(function() {
-        this.data_wrapper = new DataWrapper(data, {
+        this.dataWrapper = new DataWrapper(data, {
             separator: separator
         });
     });
 
     describe('#get', function() {
         it('returns root object if no path specified', function() {
-            this.data_wrapper.get().should.equal(data);
+            this.dataWrapper.get().should.equal(data);
         });
 
         it('returns value by path', function() {
-            this.data_wrapper.get('a$b').should.equal(data.a.b);
+            this.dataWrapper.get('a$b').should.equal(data.a.b);
         });
 
         it('returns value by path with array index', function() {
-            this.data_wrapper.get('arr$0').should.equal(data.arr[0]);
+            this.dataWrapper.get('arr$0').should.equal(data.arr[0]);
         });
     });
 
-    describe('#get_keys', function() {
+    describe('#getKeys', function() {
         it('returns keys by path', function() {
-            this.data_wrapper.get_keys('a').should.deep.equal(['b', 'bb']);
+            this.dataWrapper.getKeys('a').should.deep.equal(['b', 'bb']);
         });
         it('caches keys', function() {
-            helper.sandbox.spy(this.data_wrapper, "get");
-            this.data_wrapper.get_keys('arr');
-            this.data_wrapper.get_keys('arr');
-            this.data_wrapper.get.should.be.calledOnce;
+            helper.sandbox.spy(this.dataWrapper, "get");
+            this.dataWrapper.getKeys('arr');
+            this.dataWrapper.getKeys('arr');
+            this.dataWrapper.get.should.be.calledOnce;
         });
     });
 
-    describe('#concat_paths', function() {
+    describe('#concatPaths', function() {
         it('joins path and subpath using correct separator', function() {
-            this.data_wrapper.concat_paths("a$b", "c").should.equal("a$b$c");
+            this.dataWrapper.concatPaths("a$b", "c").should.equal("a$b$c");
         });
         it('returns path if subpath is empty', function() {
-            this.data_wrapper.concat_paths("a$b").should.equal("a$b");
+            this.dataWrapper.concatPaths("a$b").should.equal("a$b");
         });
         it('returns subpath if path is empty', function() {
-            this.data_wrapper.concat_paths("", "a").should.equal("a");
+            this.dataWrapper.concatPaths("", "a").should.equal("a");
         });
     });
 });
