@@ -17,7 +17,7 @@
     "validation"
   ],
   "dependencies": {
-    "lodash": "2.4.x",
+    "lodash": "^2.4.1",
     "node-v8-clone": "^0.6.2"
   },
   "devDependencies": {
