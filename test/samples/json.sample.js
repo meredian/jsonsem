@@ -35,11 +35,10 @@ describe('JSON schema', function() {
         });
 
         this.key('levels', {type: 'array'}, function() {
-            // this.each_index({type: 'array'}, function() {
-            //     this.index(0, {type: 'number'});
-            //     this.optional_index(1, {type: 'string'});
-            //     this.other_indexes_restricted();
-            // });
+            this.eachIndex(null, {type: 'array'}, function() {
+                this.index(0, {type: 'number'});
+                this.optionalIndex(1, {type: 'string'});
+            });
         });
 
     };
