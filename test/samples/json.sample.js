@@ -15,16 +15,8 @@ describe('JSON schema', function() {
         });
 
         this.type('resources', {type: 'object'}, function() {
-            this.method("ololo", function() {});
-            this.property("prop_2", function() {});
-            this.eachKey(this.memberOf('resources'), {type: 'number'});
+            this.eachKey(this.keyOf('resources'), {type: 'number'});
         });
-
-        this.extend('object', {}, function() {
-            // this.method("ololo", function() {});
-            this.property("prop_3", function() {});
-        });
-
 
         this.key('buildings', {type: 'object'}, function() {
             this.eachKey(this.any(), {type: 'object'}, function() {
@@ -33,14 +25,6 @@ describe('JSON schema', function() {
                 this.optionalKey('resource_production', {type: 'resources'});
             });
         });
-
-        this.key('levels', {type: 'array'}, function() {
-            this.eachIndex(null, {type: 'array'}, function() {
-                this.index(0, {type: 'number'});
-                this.optionalIndex(1, {type: 'string'});
-            });
-        });
-
     };
 
     var json = {
@@ -68,12 +52,7 @@ describe('JSON schema', function() {
                 cost: {gold: 500, wood: 200},
                 resource_production: {gold: 1000}
             }
-        },
-
-        levels: [
-            [20, 'First one'],
-            [50]
-        ]
+        }
     };
 
     it('validates JSON with no errors', function() {

@@ -1,11 +1,11 @@
 var helper = require('./../../helper.js');
 var DSL = helper.require('dsl');
 
-describe('MemberOfRestriction', function() {
+describe('KeyOfRestriction', function() {
     it('validates property names are properties of referenced object', function() {
         var dsl = new DSL().schema(function() {
             this.key('cost', {type: 'object'}, function() {
-                this.eachKey(this.memberOf('data.resources'), {type: 'number'});
+                this.eachKey(this.keyOf('data.resources'), {type: 'number'});
             });
 
             this.key('data', {type: 'object'}, function() {
