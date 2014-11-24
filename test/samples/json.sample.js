@@ -23,6 +23,7 @@ describe('JSON schema', function() {
                 this.key('name', {type: 'string'});
                 this.key('cost', {type: 'resources'});
                 this.optionalKey('resource_production', {type: 'resources'});
+                this.optionalKey('dependant_resource', {type: 'string', keyOf: 'resources'});
             });
         });
     };
@@ -50,13 +51,18 @@ describe('JSON schema', function() {
             golden_mine: {
                 name: "Golden mine",
                 cost: {gold: 500, wood: 200},
-                resource_production: {gold: 1000}
+                resource_production: {gold: 1000},
+                dependant_resource: 'gold'
             }
         }
     };
 
     it('validates JSON with no errors', function() {
         var dsl = new DSL().schema(schema);
-        dsl.validate(json).should.be.true;
+        var result = dsl.validate(json);
+        if (!result) {
+            console.log(dsl.errors);
+        }
+        result.should.be.true
     });
 });
