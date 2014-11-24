@@ -12,13 +12,13 @@ Beta for now, but already used in production. See `test/samples` folder for usag
 * Keys and optional keys presence validation for objects, indexes for array
 * Custom types definitions
 * Key name reference validation
+* Custom functional assertions if everything's really complicated
+* Custom property/index conditions
 
 #### Future plans:
 
 * Object relative cross-references
 * "Key exists" assertion for objects and arrays
-* Custom functional assertions if everything's really complicated
-* Custom property/index conditions
 * Extra schema formats, except js - JSON, possibly YAML
 
 MIT Licence.
