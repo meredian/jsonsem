@@ -4,23 +4,17 @@ var DSL = helper.require('dsl');
 describe('Type inheritance and overriding', function() {
     var schema = function() {
         this.type('type_1', {type: 'object'}, function() {
-
+            this.method('hohoho', function(txt) { console.log("TYPE 1 METHOD CALL"); });
         });
 
-        this.type('type_2', {type: 'object'}, function() {
-
+        this.type('type_2', {type: 'type_1'}, function() {
         });
 
-
-        this.type('type_3', {type: 'type_2'}, function() {
-            this.method('ololo', function(txt) { console.log("NOT OVERRIDED"); });
-        });
-
-        this.key('type_2', {type: 'type_3'}, function() {
+        this.key('type_2', {type: 'type_2'}, function() {
             this.extend('number', {}, function() {
                 this.method('hohoho', function(txt) { });
             });
-            this.key('int', {type: 'int', min: 2, max: 12}, function() {
+            this.key('int', {type: 'int'}, function() {
                 this.hohoho("EXTENDED BASE CLASS!");
             });
         });
@@ -31,7 +25,7 @@ describe('Type inheritance and overriding', function() {
     var json = {
         type_2: {
             int: 10
-        },
+        }
     };
 
     it('validates JSON with no errors', function() {

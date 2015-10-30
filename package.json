@@ -18,8 +18,7 @@
     "validation"
   ],
   "dependencies": {
-    "lodash": "^2.4.1",
-    "node-v8-clone": "^0.6.2"
+    "lodash": "^2.4.1"
   },
   "devDependencies": {
     "benchmark": "^1.0.0",
